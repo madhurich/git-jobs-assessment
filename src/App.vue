@@ -1,32 +1,64 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <div class="header-container">
+      <b-container>
+        <b-row class="job-header">
+          <b-col sm="3" class="dev-jobs-header-section">
+            <h2 class="dev-jobs-header">devjobs</h2>
+          </b-col>
+          <b-col sm="9" class="toggle-container">
+            <div @click="onToggle">
+              <span v-if="!nightMode" class="toggle-button"><b-icon icon="toggle-off"></b-icon></span>
+              <span v-else class="toggle-button"><b-icon icon="toggle-on"></b-icon></span>
+            </div>
+          </b-col>
+        </b-row>
+      </b-container>
     </div>
-    <router-view/>
+    <router-view />
   </div>
 </template>
+<script>
+export default {
+  data() {
+    return {
+      nightMode: false,
+    };
+  },
+  methods: {
+    onToggle() {
+      this.nightMode = !this.nightMode;
+      this.$el.style.backgroundColor = this.nightMode ? "#131822" : "#f5f6f8";
+    },
+  },
+  mounted() {
+    this.$el.style.backgroundColor = "#f5f6f8";
+  },
+};
+</script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+.header-container {
+  background: #5865e0;
+  height: 100px;
+  border-bottom-left-radius: 100px;
 }
-
-#nav {
-  padding: 30px;
+.dev-jobs-header-section {
+  margin-top: 15px;
 }
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
+.dev-jobs-header {
+  color: #ffffff;
 }
-
-#nav a.router-link-exact-active {
-  color: #42b983;
+.job-header {
+  width: 90% !important;
+  margin-left: 10px;
+}
+.toggle-container{
+  margin-top: 5px;
+}
+.toggle-button{
+  font-size: 40px;
+  float: right;
+  color: #ffffff;
 }
 </style>

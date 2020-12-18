@@ -1,12 +1,10 @@
 import { shallowMount } from '@vue/test-utils'
-import HelloWorld from '@/components/HelloWorld.vue'
+import Search from '@/components/Search.vue'
 
-describe('HelloWorld.vue', () => {
+describe('Search.vue', () => {
   it('renders props.msg when passed', () => {
     const msg = 'new message'
-    const wrapper = shallowMount(HelloWorld, {
-      propsData: { msg }
-    })
-    expect(wrapper.text()).toMatch(msg)
+    const wrapper = shallowMount(Search)
+    expect(wrapper).toBeTruthy();
   })
 })

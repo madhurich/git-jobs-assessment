@@ -14,11 +14,23 @@ const initialPayload = {
 export default new Vuex.Store({
   state: {
     jobs: [],
+    nightMode: false,
+    noResults: null,
+    isFailure: null,
   },
   mutations: {
     setJobs(state, payload) {
       state.jobs = payload.isFilter ? [...payload.jobs] : [...state.jobs, ...payload.jobs];
-    }
+    },
+    toggleMode(state) {
+      state.nightMode = !state.nightMode;
+    },
+    noResults(state, payload){
+      state.noResults = payload.value;
+    },
+    failure(state, payload) {
+      state.isFailure = payload.value;
+    },
   },
   actions: {
     getJobs(context, payload = initialPayload) {
@@ -45,8 +57,16 @@ export default new Vuex.Store({
       let finalFilter = searchFilter + (geoLocation ? geoLocation : locationFilter) + fullTimeFilter;
 
       let url = (prefixurl + "https://jobs.github.com/positions.json?page=" + payload.pageNum + finalFilter);
-      return axios.get(url, { headers: { Accept: 'application/json' } }).then((res) => {
+      return axios.get(url).then((res) => {
+        if(finalFilter && res.data.length === 0) {
+          context.commit('noResults', {value: true});
+        }else {
+          context.commit('noResults', {value: false});
+        }
         context.commit('setJobs', { jobs: res.data, isFilter: finalFilter });
+      })
+      .catch(err => {
+        context.commit('failure', {value: err})       
       });
     },
   },

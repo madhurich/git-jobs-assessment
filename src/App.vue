@@ -19,17 +19,22 @@
   </div>
 </template>
 <script>
+import {mapMutations} from 'vuex';
 export default {
-  data() {
-    return {
-      nightMode: false,
-    };
+  computed: {
+    nightMode(){
+      return this.$store.state.nightMode;
+    }
   },
   methods: {
     onToggle() {
-      this.nightMode = !this.nightMode;
-      this.$el.style.backgroundColor = this.nightMode ? "#131822" : "#f5f6f8";
+      this.toggleMode();
+      this.$el.style.backgroundColor = this.nightMode ? "black" : "#f5f6f8";
     },
+    ...mapMutations(["toggleMode"]),
+    ...mapMutations({
+      toggleMode: "toggleMode",
+    }),
   },
   mounted() {
     this.$el.style.backgroundColor = "#f5f6f8";

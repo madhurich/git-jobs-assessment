@@ -3,11 +3,21 @@
     <Search />
     <div class="all-jobs">
       <b-container class="bv-example-row">
+        <b-row class="no-results">
+          <b-col sm="12">
+            <p v-if="noResults">
+              No results found for specified search criteria
+            </p>
+            <p v-if="FailureMsg">
+              {{ FailureMsg }}
+            </p>
+          </b-col>
+        </b-row>
         <b-row>
-          <!-- <div > -->
           <b-col
             sm="3"
             class="single-job"
+            :style="{ background: nightMode ? '#131822' : '#FFFFFF' }"
             v-for="(job, index) in jobs"
             :key="index"
           >
@@ -15,13 +25,17 @@
               <img :src="job.company_logo" width="50" height="50" />
               <div class="short-details">
                 <p class="type">{{ job.type }}</p>
-                <p class="title">{{ job.title }}</p>
+                <p
+                  class="title"
+                  :style="{ color: nightMode ? '#FFFFFF' : 'black' }"
+                >
+                  {{ job.title }}
+                </p>
                 <p class="company">{{ job.company }}</p>
                 <p class="location">{{ job.location }}</p>
               </div>
             </router-link>
           </b-col>
-          <!-- </div> -->
         </b-row>
       </b-container>
       <b-container>
@@ -57,6 +71,18 @@ export default {
     jobs() {
       return this.$store.state.jobs;
     },
+    noResults() {
+      return this.$store.state.noResults;
+    },
+    FailureMsg() {
+      return this.$store.state.isFailure;
+    },
+    nightMode() {
+      return this.$store.state.nightMode;
+    },
+    textColor() {
+      return {};
+    },
   },
   methods: {
     ...mapActions(["getJobs"]),
@@ -85,7 +111,6 @@ export default {
 <style scoped>
 .single-job {
   text-align: left;
-  background: #ffffff;
   border: 1px solid transparent;
   border-radius: 5px;
   padding: 10px;
@@ -111,11 +136,14 @@ img {
   color: #b3b3b3;
 }
 .title {
-  color: black;
   font-weight: bold;
 }
 .location {
   color: #5865e0;
   font-size: small;
+}
+.no-results {
+  text-align: center;
+  font-size: large;
 }
 </style>

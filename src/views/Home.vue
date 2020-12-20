@@ -2,13 +2,13 @@
   <div>
     <Search />
     <div class="all-jobs">
-      <b-container class="bv-example-row">
+      <b-container class="bv-example-row all-jobs-container">
         <b-row class="no-results">
           <b-col sm="12">
             <p v-if="noResults">
               No results found for specified search criteria
             </p>
-            <p v-if="FailureMsg">
+            <p class="failure" v-if="FailureMsg">
               {{ FailureMsg }}
             </p>
           </b-col>
@@ -35,13 +35,11 @@
           </b-col>
         </b-row>
       </b-container>
-      <b-container>
+      <b-container fluid class="bv-example-row margin-top35">
         <b-row>
-          <b-col sm="12"
-            ><b-button @click="loadMore" class="load-more" variant="primary"
-              >Load More</b-button
-            ></b-col
-          >
+          <b-col md="4" offset-md="6" sm="5" offset-sm="5" class="load-more-button-col">
+            <b-button @click="loadMore" class="load-more" variant="primary">Load More</b-button>
+          </b-col>
         </b-row>
       </b-container>
     </div>
@@ -49,8 +47,6 @@
 </template>
 
 <script>
-// @ is an alias to /src
-
 import Search from "@/components/Search.vue";
 import { mapActions } from "vuex";
 import { mapGetters } from "vuex";
@@ -96,9 +92,6 @@ export default {
   created() {
     this.getJobs();
   },
-  mounted() {
-    // this.scroll();
-  },
 };
 </script>
 <style scoped>
@@ -138,5 +131,30 @@ img {
 .no-results {
   text-align: center;
   font-size: large;
+}
+.all-jobs-container {
+  padding-right: 0px;
+  padding-bottom: 0px;
+}
+.margin-top35 {
+  margin-top: 35px;
+}
+.load-more {
+  background-color: #5865e0;
+}
+.load-more-button-col {
+  padding-left: 0px;
+}
+@media (max-width: 574px) {
+  .single-job {
+    margin-top: 10%;
+    margin-right: 8%;
+  }
+  .load-more-button-col {
+    margin-left: 38%;
+  }
+}
+.failure {
+  color: red;
 }
 </style>

@@ -2,7 +2,7 @@ const setJobs = (state, payload) => {
     state.jobs = payload.isFilter ? [...payload.jobs] : [...state.jobs, ...payload.jobs];
 };
 
-const toggleMode = (state, payload) => {
+const toggleMode = (state) => {
     state.nightMode = !state.nightMode;
 };
 const noResults = (state, payload) => {

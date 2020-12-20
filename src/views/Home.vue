@@ -17,7 +17,7 @@
           <b-col
             sm="3"
             class="single-job"
-            :style="{ background: nightMode ? '#131822' : '#FFFFFF' }"
+            :style="backgroundColor"
             v-for="(job, index) in jobs"
             :key="index"
           >
@@ -25,10 +25,7 @@
               <img :src="job.company_logo" width="50" height="50" />
               <div class="short-details">
                 <p class="type">{{ job.type }}</p>
-                <p
-                  class="title"
-                  :style="{ color: nightMode ? '#FFFFFF' : 'black' }"
-                >
+                <p class="title" :style="textColor">
                   {{ job.title }}
                 </p>
                 <p class="company">{{ job.company }}</p>
@@ -56,6 +53,7 @@
 
 import Search from "@/components/Search.vue";
 import { mapActions } from "vuex";
+import { mapGetters } from "vuex";
 
 export default {
   components: {
@@ -68,20 +66,15 @@ export default {
     };
   },
   computed: {
-    jobs() {
-      return this.$store.state.jobs;
-    },
-    noResults() {
-      return this.$store.state.noResults;
-    },
-    FailureMsg() {
-      return this.$store.state.isFailure;
-    },
-    nightMode() {
-      return this.$store.state.nightMode;
-    },
+    ...mapGetters(["jobs", "noResults", "nightMode"]),
+    ...mapGetters({
+      FailureMsg: "isFailure",
+    }),
     textColor() {
-      return {};
+      return { color: this.nightMode ? "#FFFFFF" : "black" };
+    },
+    backgroundColor() {
+      return { background: this.nightMode ? "#131822" : "#FFFFFF" };
     },
   },
   methods: {

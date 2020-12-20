@@ -20,11 +20,12 @@
 </template>
 <script>
 import {mapMutations} from 'vuex';
+import { mapGetters } from "vuex";
 export default {
   computed: {
-    nightMode(){
-      return this.$store.state.nightMode;
-    }
+    ...mapGetters([
+      "nightMode",
+    ]),
   },
   methods: {
     onToggle() {

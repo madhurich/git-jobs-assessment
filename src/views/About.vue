@@ -82,6 +82,8 @@
   </div>
 </template>
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   data() {
     let job = this.$store.state.jobs[this.$route.params.id];
@@ -90,9 +92,9 @@ export default {
     };
   },
   computed: {
-    nightMode() {
-      return this.$store.state.nightMode;
-    },
+    ...mapGetters([
+      "nightMode",
+    ]),
     nightBackground() {
       return { background: this.nightMode ? '#131822' : '#FFFFFF' };
     },

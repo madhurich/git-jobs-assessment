@@ -5,7 +5,7 @@
       <b-container class="bv-example-row all-jobs-container">
         <b-row class="no-results">
           <b-col sm="12">
-            <p v-if="noResults">
+            <p :style="textColor" v-if="noResults">
               No results found for specified search criteria
             </p>
             <p class="failure" v-if="FailureMsg">
